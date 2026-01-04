@@ -1,0 +1,103 @@
+body {
+    font-family: monospace;
+    color: #fff8db;
+    background-color: #202020;
+    padding: 2.5%;
+}
+
+.hidden {
+    display: none;
+}
+
+#center {
+    padding: 3%;
+    background-color: #2a2a2a;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#top {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+#top > .menuitem {
+    background-color: #2a2a2a;
+    border-style: solid;
+
+    color:inherit;
+    font-family: monospace;
+    border-color: #fff8db;
+
+    flex: 1;
+
+    display: flex;
+    justify-content: center;    /* horizontal */
+    align-items: center;        /* vertical   */
+    text-align: center;
+    
+    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+
+    font-size:1.5cm;
+}
+
+#top > .menuitem:hover {
+    background-color: #fff8db;
+    color: #2a2a2a;
+}
+
+#top > #download {
+    padding: 0;
+
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+#top > #upload > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width:100%;
+    padding-right: 2%;
+}
+
+#top > #upload > button {
+    /* cant do inherit here, else this button's stuff is also affected by transitions etc. */
+    color: #fff8db;
+    background-color: #2a2a2a;
+    border: solid;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+}
+#top > #upload > button:hover {
+    background-color: #fff8db;
+    color: #2a2a2a;
+}
+
+#file-table {
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+#file-table-head > tr > th {
+    text-align: left;
+    border-bottom-width: #fff8db;
+    border-bottom-style: solid;
+
+}
+
+#file-table-body > tr > td {
+    text-align: left;
+}
+
+button.colsort {
+    background-color: #fff8db;
+    color: #2a2a2a;
+    font-size: 1.5rem;
+}

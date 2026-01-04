@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cosmo FTP</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <div id="center">
+        <div id="top">
+            <button id="download" class="menuitem" onclick="location.href = '../see'">
+                <span>download</span>
+            </button>
+            <iframe id="dummy" name="dummy" style="display: none; width: 0;"></iframe>
+            <form id="upload" class="menuitem" action="/cosmo/upload" method="post" enctype="multipart/form-data" target="dummy">
+                <input type="file" id="upload-input" name="uploaded-files" class=hidden multiple/>
+                <label for="upload-input">upload</label>
+                <button type="submit" id="submit-input">...</button>
+
+                <script>
+                    /* update the label's text */
+                    const submit = document.getElementById("submit-input");
+
+                    document.getElementById("upload-input").addEventListener("change", (event) => {
+                        console.log("CHANGE");
+                        const files = event.target.files;
+                        console.log(files.length);
+
+                        if (files.length == 0) {
+                            submit.textContent = "...";
+                        } else {
+                            submit.textContent = "submit " + files.length + " file" + (files.length==1?'':'s') + '!';
+                        }
+                    });
+
+                    submit.addEventListener("click", (event) => {
+                        if (submit.textContent != "...") {
+                            submit.textContent = "sent!";
+                            setTimeout(function() {submit.textContent = "...";}, 500);
+                        }
+                    });
+                </script>
+            </form>
+        </div>
+        <div id="content">
+            <button onclick="location.reload()">reload</button>
+            <table id="file-table">
+                <thead id="file-table-head">
+                    <tr>
+                        <th>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[0].textContent)">&#8593;</button>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[0].textContent, true)">&#8595;</button>
+                            filename
+                        </th>
+                        <th>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[1].textContent)">&#8593;</button>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[1].textContent, true)">&#8595;</button>
+                            size
+                        </th>
+                        <th>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[2].textContent)">&#8593;</button>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[2].textContent, true)">&#8595;</button>
+                            ip
+                        </th>
+                        <th>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[3].textContent)">&#8593;</button>
+                            <button class="colsort" onclick="sortby((tr) => tr.children[3].textContent, true)">&#8595;</button>
+                            time
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="file-table-body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

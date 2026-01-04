@@ -1,0 +1,1 @@
+c:/apache24/bin/httpd.exe -k restart -n "cosmo"

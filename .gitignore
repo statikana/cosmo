@@ -1,1 +1,5 @@
 *.log
+*.crt
+*.cert
+*.key
+site/cosmo/media
