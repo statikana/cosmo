@@ -1,4 +1,4 @@
-very simple code for a locally hosted/served file server, not actually hosted anywhere right now. was previously used with a https://tailscale.net network.
+very simple code for a locally hosted/served file server, not actually hosted anywhere right now. was previously used with a https://tailscale.com network.
 
 1. install apache 2.4 httpd for windows into c:/apache24
 
