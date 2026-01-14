@@ -1,3 +1,5 @@
+very simple code for a locally hosted/served file server, not actually hosted anywhere right now. was previously used with a https://tailscale.net network.
+
 1. install apache 2.4 httpd for windows into c:/apache24
 
 2. register as net service: `c:/apache24/bin/httpd.exe -k install -n cosmo -f .../apache/cosmo.conf`
