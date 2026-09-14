@@ -1,16 +1,16 @@
 # cosmo
 
-Cosmo is a small self-hosted file server. It's a web app you run on your own machine (and, optionally, your own network) to push files to and pull them from over plain HTTP. Just a browser and an endpoint.
+Cosmo is a small self-hosted file server. It's a web app you run on your own machine to push files to and pull them from over plain HTTP.
 
-It isn't hosted anywhere right now, but it has been previously ran over a [Tailscale](https://tailscale.com) network, which is exactly what the TLS config in `apache/httpd-ssl.conf` is still set up for.
+It isn't hosted anywhere right now, but it has been previously ran over a [Tailscale](https://tailscale.com) network, which is what the TLS config in `apache/httpd-ssl.conf` is still set up for.
 
 ## How it works
 
 - Apache 2.4 serves the static front end and hands everything else off to a small Python WSGI app via `mod_wsgi`.
 - The front end (`site/cosmo/index.html`, `index.js`, `index.css`) is a single-page upload/download UI. Uploads post into a hidden iframe; downloads and deletes are handled by a modest amount of vanilla JS.
 - The backend (`site/cosmo/cosmo_wsgi.py`) is deliberately small and handles exactly two routes:
-  - `POST /cosmo/upload` — accepts a `multipart/form-data` upload (field name `uploaded-files`), writes each file to `site/cosmo/media/`, then appends an entry (remote IP, timestamp, size) to `data.json`.
-  - `POST /cosmo/delete` — reads a `filenames` query parameter and removes the matching files on disk along with their metadata.
+  - `POST /cosmo/upload`: accepts a `multipart/form-data` upload (field name `uploaded-files`), writes each file to `site/cosmo/media/`, then appends an entry (remote IP, timestamp, size) to `data.json`.
+  - `POST /cosmo/delete`: reads a `filenames` query parameter and removes the matching files on disk along with their metadata.
 - Writes to `data.json` are serialized behind a `threading.Lock` so concurrent uploads don't clobber each other. (It's never been load-tested, but the thought counts.)
 - Anything that isn't one of those two routes returns a `500`. On purpose.
 
