@@ -64,13 +64,13 @@ def upload_files(environ: dict) -> list[bytes]:
                 file_json = dict()
         with open(f'{COSMO_ROOT}/data.json', 'w') as file:
             for filename in filenames:
-                
+
                 entry = {
                     'ip': environ.get('REMOTE_ADDR', 'unknown'),
                     'time': time.time(),
                     'size': os.path.getsize(f'{COSMO_ROOT}/media/{filename}')
                 }
-        
+
                 file_json.update({filename: entry})
 
             file.write(json.dumps(file_json))
@@ -79,17 +79,19 @@ def upload_files(environ: dict) -> list[bytes]:
 
 def delete_files(environ: dict) -> list[bytes]:
     query = parse_qs(environ['QUERY_STRING'])
-    filenames = map(unquote, query["filenames"])
+    filenames = map(unquote, query.get('filenames', []))
     with data_lock:
         with open(f"{COSMO_ROOT}/data.json", "r+") as f:
             data = json.load(f)
             for filename in filenames:
-                os.remove(f'{COSMO_ROOT}/media/{filename}')
+                try:
+                    os.remove(f'{COSMO_ROOT}/media/{filename}')
+                except FileNotFoundError:
+                    pass
 
                 if filename in data:
                     del data[filename]
-            logging.error("WRITING", data)
             f.seek(0)
-            f.
+            f.truncate()
             json.dump(data, f)
     return []
